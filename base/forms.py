@@ -1,6 +1,6 @@
 from logging import PlaceHolder
 from django.forms import ModelForm
-from .models import Project
+from .models import Project, Message
 
 class ProjectForm(ModelForm):
     class Meta:
@@ -20,5 +20,32 @@ class ProjectForm(ModelForm):
             }
         )
 
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = '__all__'
+        exclude = ['is_read', 'id']
+
+    def __init__(self, *args, **kwargs):
+        super(MessageForm, self).__init__(*args, **kwargs)
         
+        self.fields['name'].widget.attrs.update({
+            'class': 'form-control',
+            }
+        )
+        
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-control',
+            }
+        )
+
+        self.fields['subject'].widget.attrs.update({
+            'class': 'form-control',
+            }
+        )
+
+        self.fields['body'].widget.attrs.update({
+            'class': 'form-control',
+            }
+        )
        

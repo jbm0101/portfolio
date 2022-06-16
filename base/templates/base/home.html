@@ -1,64 +1,81 @@
 {% extends 'base/main.html' %}
 {% load static %}
-    {% block content %}
-    <section class="hero">
-        <div class="hero--content">
+{% block content %}
+<section class="hero">
+    <div class="hero--content">
 
-            <div class="hero--content--intro">
-                <img src="{% static 'images/20220419_143628~2.jpg' %}" id="profile-pic"/>
-                <h1 class="intro--name"> Jayesh<br>Maiyani</h1>
-            </div>
+        <div class="hero--content--intro">
+            <img src="{% static 'images/20220419_143628~2.jpg' %}" id="profile-pic" />
+            <h1 class="intro--name"> Jayesh<br>Maiyani</h1>
+        </div>
 
-            <div class="hero--content--subheadline">
+        <div class="hero--content--subheadline">
             <h3 class="description">Android Developer</h3>
             <p class="slogan">
                 I love making android applications.
             </p>
+        </div>
+    </div>
+
+</section>
+
+<section class="container section--2">
+    <h3>My Projects</h3>
+    <p>Projects which made my journey worthwhile</p>
+    <div class="projects--wrapper">
+        {% for project in projects %}
+        <div class="project--column">
+            <a href="{% url 'project' project.id %}">
+                <img class="project--thumbnail" src="{{ project.thumbnail }}">
+            </a>
+
+            <div class="project--body">
+                <h4>{{ project.title }}</h4>
             </div>
         </div>
+        {% empty %}
+        <h3>There are no projects in database...</h3>
+        {% endfor %}
+    </div>
 
-    </section>
+    <h3>More About Me</h3>
+    <div>
+        <p>
+            Lorem ipsum sit dolor amet.
+        </p>
+        <p>
+            another Lorem ipsum sit dolor amet.
+        </p>
+    </div>
+</section>
 
-    <section class="container section--2">
-        <h3>My Projects</h3>
-        <p>Projects which made my journey worthwhile</p>
-        <div class="projects--wrapper">
-            {% for project in projects %}
-            <div class="project--column">
-                <a href="{% url 'project' project.id %}">
-                    <img class="project--thumbnail" src="{{ project.thumbnail }}">
-                </a>
+<section class="section--1">
+    <div class="skills--container">
+        <h3>Skills</h3>
+        {% for skill in skills %}
+        <div class="skill--wrapper">
+            <h5>{{ skill.title }}</h5>
+            <p>{{ skill.body }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 
-                <div class="project--body">
-                    <h4>{{ project.title }}</h4>
-                </div>
+<section class="section--3">
+    <div class="container">
+        <form class="contact--form" method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">{{ field.label }}</label>
+                {{ field }}
             </div>
-            {% empty %}
-                <h3>There are no projects in database...</h3>
             {% endfor %}
-        </div>
 
-        <h3>More About Me</h3>
-        <div>
-            <p>
-                Lorem ipsum sit dolor amet.
-            </p>
-            <p>
-                another Lorem ipsum sit dolor amet.
-            </p>
-        </div>
-    </section>
+            <input class="btn btn-primary" type="submit" value="submit">
+        </form>
+    </div>
+</section>
 
-    <section class="section--1">
-        <div class="skills--container">
-            <h3>Skills</h3>
-            {% for skill in skills %}
-            <div class="skill--wrapper">
-                <h5>{{ skill.title }}</h5>
-                <p>{{ skill.body }}</p>
-            </div>
-            {% endfor %}
-        </div> 
-    </section>
-
-    {% endblock content %}
+{% endblock content %}
